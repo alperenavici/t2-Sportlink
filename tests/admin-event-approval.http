@@ -1,0 +1,70 @@
+### Admin Etkinlik Onaylama Sistemi Test İstekleri
+### Bu dosya, REST Client (VSCode eklentisi) ile çalıştırılabilir
+
+@baseUrl = http://localhost:3000/api
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... # Admin JWT token'ını buraya ekleyin
+@userId = 5f8d0f3e-6da4-4f0d-8... # Test kullanıcısının ID'si
+@sportId = 18f0a9e5-1c2d-4f3e-9... # Test spor ID'si
+
+### 1. Normal Kullanıcı Olarak Etkinlik Oluştur (Pending Statüsü Alacak)
+POST {{baseUrl}}/events
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+  "sport_id": "{{sportId}}",
+  "title": "Test Onay Bekleyen Etkinlik",
+  "description": "Bu etkinlik onay sürecini test etmek için oluşturulmuştur",
+  "event_date": "2025-06-15",
+  "start_time": "2025-06-15T10:00:00.000Z",
+  "end_time": "2025-06-15T12:00:00.000Z",
+  "location_name": "Test Lokasyonu",
+  "location_latitude": 41.0082,
+  "location_longitude": 28.9784,
+  "max_participants": 10,
+  "status": "active"
+}
+
+### 2. Admin Olarak Onay Bekleyen Etkinlikleri Listele
+GET {{baseUrl}}/admin/events/pending
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 3. Filtreler ile Etkinlikleri Listele (Admin)
+GET {{baseUrl}}/admin/events/filter?status=pending&title=Test
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 4. Detaylı Filtreler ile Etkinlikleri Listele (Admin)
+GET {{baseUrl}}/admin/events/filter?status=pending&startDate=2025-01-01&endDate=2025-12-31&sportId={{sportId}}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 5. Etkinliği Onayla (Admin)
+# {eventId} yerine onaylanacak etkinliğin ID'sini yazın
+PUT {{baseUrl}}/admin/events/{eventId}/approve-reject
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "status": "active"
+}
+
+### 6. Etkinliği Reddet ve Red Nedeni Ekle (Admin)
+# {eventId} yerine reddedilecek etkinliğin ID'sini yazın
+PUT {{baseUrl}}/admin/events/{eventId}/approve-reject
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "status": "canceled",
+  "rejection_reason": "Etkinlik içeriği uygun değil"
+}
+
+### 7. Onaylanan/Reddedilen Etkinliğin Durumunu Kontrol Et
+GET {{baseUrl}}/events/{eventId}
+Content-Type: application/json
+
+### 8. Etkinlikleri Statüye Göre Filtrele (Genel Endpoint)
+GET {{baseUrl}}/events?status=pending
+Content-Type: application/json 

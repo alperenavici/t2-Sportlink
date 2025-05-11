@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "commonjs",
+    "lib": [
+      "es2019",
+      "esnext.asynciterable"
+    ],
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    /* Uyarı Yapılandırması */
+    "noUnusedLocals": false, /* Kullanılmayan yerel değişkenler için uyarıları kapat */
+    "noUnusedParameters": false, /* Kullanılmayan parametreler için uyarıları kapat */
+    "noImplicitReturns": true, /* Tüm kod yollarında dönüş olduğundan emin ol */
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false /* Implicitly any tiplemeleri izin ver */
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

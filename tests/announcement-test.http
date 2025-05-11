@@ -1,0 +1,85 @@
+### Duyuru API Test İstekleri
+### Bu dosya, REST Client (VSCode eklentisi) ile çalıştırılabilir
+
+@baseUrl = http://localhost:3000/api
+@userToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... # Kullanıcı token'ı buraya ekleyin
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... # Admin token'ı buraya ekleyin
+
+### GENEL DUYURU ENDPOINT'LERİ
+
+### 1. Tüm duyuruları listele
+GET {{baseUrl}}/announcements
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+### 2. Aktif duyuruları listele
+GET {{baseUrl}}/announcements/active
+Content-Type: application/json
+
+### 3. Belirli bir duyuruyu ID ile görüntüle
+# {announcementId} yerine geçerli bir duyuru ID'si ekleyin
+GET {{baseUrl}}/announcements/id/{announcementId}
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+### 4. Belirli bir duyuruyu slug ile görüntüle
+# {slug} yerine geçerli bir duyuru slug'ı ekleyin
+GET {{baseUrl}}/announcements/{slug}
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+### ADMIN DUYURU ENDPOINT'LERİ
+
+### 5. [ADMIN] Tüm duyuruları listele (admin paneli)
+GET {{baseUrl}}/api/admin/announcements
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 6. [ADMIN] Yeni duyuru oluştur
+POST {{baseUrl}}/api/admin/announcements
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Sistem Bakımı",
+  "content": "Yarın 02:00-04:00 saatleri arasında sistem bakımı yapılacaktır. Bu süre zarfında platformumuz geçici olarak kullanılamayacaktır.",
+  "published": false,
+  "start_date": "2023-06-15",
+  "end_date": "2023-06-25"
+}
+
+### 7. [ADMIN] Duyuru detayını görüntüle
+# {announcementId} yerine geçerli bir duyuru ID'si ekleyin
+GET {{baseUrl}}/admin/announcements/{announcementId}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 8. [ADMIN] Duyuru güncelle
+# {announcementId} yerine geçerli bir duyuru ID'si ekleyin
+PUT {{baseUrl}}/api/admin/announcements/{announcementId}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Sistem Bakımı - Güncellendi",
+  "content": "Yarın 03:00-05:00 saatleri arasında sistem bakımı yapılacaktır. Bu süre zarfında platformumuz geçici olarak kullanılamayacaktır.",
+  "end_date": "2023-06-30"
+}
+
+### 9. [ADMIN] Duyuruyu yayınla
+# {announcementId} yerine geçerli bir duyuru ID'si ekleyin
+PUT {{baseUrl}}/api/admin/announcements/{announcementId}/publish
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 10. [ADMIN] Duyuruyu yayından kaldır
+# {announcementId} yerine geçerli bir duyuru ID'si ekleyin
+PUT {{baseUrl}}/api/admin/announcements/{announcementId}/unpublish
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 11. [ADMIN] Duyuru sil
+# {announcementId} yerine geçerli bir duyuru ID'si ekleyin
+DELETE {{baseUrl}}/api/admin/announcements/{announcementId}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}} 

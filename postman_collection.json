@@ -1,0 +1,1148 @@
+{
+	"info": {
+		"_postman_id": "bb24b08b-80a1-47d2-8780-9f633f7b9fec",
+		"name": "DeepVision API",
+		"description": "DeepVision web backend API için Postman koleksiyonu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43148018"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"kullanici@ornek.com\",\n  \"password\": \"sifre123\",\n  \"name\": \"Ahmet Yılmaz\",\n  \"username\": \"ahmetyilmaz\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Yeni kullanıcı kaydı oluşturur"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"kullanici@ornek.com\",\n  \"password\": \"sifre123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Kullanıcı girişi yapar ve token alır"
+					},
+					"response": [
+						{
+							"name": "Successful login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"kullanici@ornek.com\",\n  \"password\": \"sifre123\"\n}"
+								},
+								"url": {
+									"raw": ""
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"user\": {\n        \"id\": \"1\",\n        \"email\": \"kullanici@ornek.com\",\n        \"name\": \"Ahmet Yılmaz\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Kullanıcı çıkışı yapar"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"kullanici@ornek.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/reset-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"reset-password"
+							]
+						},
+						"description": "Şifre sıfırlama bağlantısı gönderir"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						},
+						"description": "Mevcut kullanıcı bilgilerini getirir"
+					},
+					"response": []
+				},
+				{
+					"name": "Check User Exists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/check-user/{{email}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"check-user",
+								"{{email}}"
+							]
+						},
+						"description": "Kullanıcının varlığını kontrol eder"
+					},
+					"response": []
+				}
+			],
+			"description": "Kimlik doğrulama işlemleri"
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						},
+						"description": "Tüm kullanıcıları listeler (Sadece admin)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						},
+						"description": "Kullanıcı detayını ID ile getirir"
+					},
+					"response": []
+				},
+				{
+					"name": "change role",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "delete-user",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "list-join-event",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "list-create-event",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"description": "Kullanıcı yönetimi"
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						},
+						"description": "Kullanıcı profilini getirir"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"full_name\": \"Ahmet Yılmaz\",\n  \"avatar_url\": \"https://example.com/avatar.jpg\",\n  \"website\": \"https://ahmetyilmaz.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						},
+						"description": "Kullanıcı profilini günceller"
+					},
+					"response": []
+				}
+			],
+			"description": "Profil yönetimi"
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "List Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						},
+						"description": "Tüm etkinlikleri listeler"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Upcoming Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/upcoming",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"upcoming"
+							]
+						},
+						"description": "Yaklaşan etkinlikleri listeler"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Event By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{eventId}}"
+							]
+						},
+						"description": "Etkinlik detayını ID ile getirir"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Event By Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/slug/{{eventSlug}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"slug",
+								"{{eventSlug}}"
+							]
+						},
+						"description": "Etkinlik detayını slug ile getirir"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Futbol Turnuvası\",\n  \"description\": \"Aylık futbol turnuvası\",\n  \"start_date\": \"2023-08-15T10:00:00Z\",\n  \"end_date\": \"2023-08-15T14:00:00Z\",\n  \"location\": \"Spor Sahası\",\n  \"max_participants\": 20\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						},
+						"description": "Yeni etkinlik oluşturur"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Güncellenmiş Futbol Turnuvası\",\n  \"description\": \"Güncellenmiş açıklama\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{eventId}}"
+							]
+						},
+						"description": "Etkinlik bilgilerini günceller"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{eventId}}"
+							]
+						},
+						"description": "Etkinliği siler"
+					},
+					"response": []
+				},
+				{
+					"name": "Join Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/join",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{eventId}}",
+								"join"
+							]
+						},
+						"description": "Etkinliğe katılım sağlar"
+					},
+					"response": []
+				},
+				{
+					"name": "Leave Event",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/leave",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"{{eventId}}",
+								"leave"
+							]
+						},
+						"description": "Etkinlikten ayrılır"
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5IiwiZW1haWwiOiJhbHBlcmVuYXZjaTQ5QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTE0MDM4NywiZXhwIjoxNzQ1NzQ1MTg3fQ.mR5osc2RLiwhUlbSOIwDa16C-IHmRb_OVV7QDVfgCiU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/admin/4/approve",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"admin",
+								"4",
+								"approve"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Etkinlik yönetimi"
+		},
+		{
+			"name": "News",
+			"item": [
+				{
+					"name": "List News",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/news?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"news"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Haberleri listeler"
+					},
+					"response": []
+				},
+				{
+					"name": "Get News By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/news/{{newsId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"news",
+								"{{newsId}}"
+							]
+						},
+						"description": "Haber detayını ID ile getirir"
+					},
+					"response": []
+				},
+				{
+					"name": "Create News",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Yeni Haber Başlığı\",\n  \"content\": \"Haber içeriği burada\",\n  \"sport_id\": \"1\",\n  \"source_url\": \"https://ornek.com/kaynak\",\n  \"image_url\": \"https://ornek.com/resim.jpg\",\n  \"published_date\": \"2023-08-15T10:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/news",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"news"
+							]
+						},
+						"description": "Yeni haber oluşturur (Admin)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update News",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Güncellenmiş Haber Başlığı\",\n  \"content\": \"Güncellenmiş haber içeriği\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/news/{{newsId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"news",
+								"{{newsId}}"
+							]
+						},
+						"description": "Haber bilgilerini günceller"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete News",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/news/{{newsId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"news",
+								"{{newsId}}"
+							]
+						},
+						"description": "Haberi siler"
+					},
+					"response": []
+				},
+				{
+					"name": "Search News",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/news/search?q=arama&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"news",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "arama"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Haberlerde arama yapar"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Recent News",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/news/recent?limit=5&sport_id=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"news",
+								"recent"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "sport_id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Son haberleri getirir"
+					},
+					"response": []
+				}
+			],
+			"description": "Haber yönetimi"
+		},
+		{
+			"name": "Announcements",
+			"item": [
+				{
+					"name": "List Announcements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/announcements?page=1&pageSize=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"announcements"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Duyuruları listeler"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Announcement By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/announcements/{{announcementId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"announcements",
+								"{{announcementId}}"
+							]
+						},
+						"description": "Duyuru detayını ID ile getirir"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Announcement By Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/announcements/slug/{{announcementSlug}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"announcements",
+								"slug",
+								"{{announcementSlug}}"
+							]
+						},
+						"description": "Duyuru detayını slug ile getirir"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Active Announcements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/announcements/active",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"announcements",
+								"active"
+							]
+						},
+						"description": "Aktif duyuruları getirir"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Announcement",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Önemli Duyuru\",\n  \"content\": \"Duyuru içeriği burada\",\n  \"isImportant\": true,\n  \"isPublished\": true,\n  \"publishedAt\": \"2023-08-15T10:00:00Z\",\n  \"expiresAt\": \"2023-09-15T10:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/announcements",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"announcements"
+							]
+						},
+						"description": "Yeni duyuru oluşturur (Admin)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Announcement",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Güncellenmiş Duyuru\",\n  \"content\": \"Güncellenmiş içerik\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/announcements/{{announcementId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"announcements",
+								"{{announcementId}}"
+							]
+						},
+						"description": "Duyuru bilgilerini günceller"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Announcement",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/announcements/{{announcementId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"announcements",
+								"{{announcementId}}"
+							]
+						},
+						"description": "Duyuruyu siler"
+					},
+					"response": []
+				}
+			],
+			"description": "Duyuru yönetimi"
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Rapor oluştur",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reported_id\": \"f4f4753a-69a1-4f32-b6c9-587729ade123\",\n  \"event_id\": \"8df9f054-4666-404e-bacd-2da6a88ba258\",\n  \"report_reason\": \"Etkinlikte kaba davranışlar sergiledi ve diğer katılımcılara rahatsızlık verdi.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/reports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"reports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tüm raporları Listele",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsImtpZCI6IllkbEc3a3FOMjgzVDNaZ0oiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NmZHV2bHJpemtya3Bpa3NxeXFtLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJiNmFiODZjZC02N2QwLTRkMmUtYjNlZS05YjJmYjQ0M2VkNWUiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzQ1NDAwNTQ5LCJpYXQiOjE3NDUzOTY5NDksImVtYWlsIjoiZ2lyaXdlMTc2MEBmNXVybC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoiZ2lyaXdlMTc2MEBmNXVybC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyc3RfbmFtZSI6IkFscGVyZW4iLCJsYXN0X25hbWUiOiJBY3YiLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6ImI2YWI4NmNkLTY3ZDAtNGQyZS1iM2VlLTliMmZiNDQzZWQ1ZSIsInVzZXJuYW1lIjoiYWxpIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3NDUzOTY5NDl9XSwic2Vzc2lvbl9pZCI6IjI5N2JiNDg2LWJiNzktNDM5OS1iNTAyLWYxODZiZTIxMmFjMiIsImlzX2Fub255bW91cyI6ZmFsc2V9.gC4hM8Syya3d3mcL0_-kAVvb7h385gb-OOH6_nLhgC4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/reports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"reports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Etkinlik Raporlarını Listele",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsImtpZCI6IllkbEc3a3FOMjgzVDNaZ0oiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NmZHV2bHJpemtya3Bpa3NxeXFtLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJiNmFiODZjZC02N2QwLTRkMmUtYjNlZS05YjJmYjQ0M2VkNWUiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzQ1NDAwNTQ5LCJpYXQiOjE3NDUzOTY5NDksImVtYWlsIjoiZ2lyaXdlMTc2MEBmNXVybC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoiZ2lyaXdlMTc2MEBmNXVybC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyc3RfbmFtZSI6IkFscGVyZW4iLCJsYXN0X25hbWUiOiJBY3YiLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6ImI2YWI4NmNkLTY3ZDAtNGQyZS1iM2VlLTliMmZiNDQzZWQ1ZSIsInVzZXJuYW1lIjoiYWxpIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3NDUzOTY5NDl9XSwic2Vzc2lvbl9pZCI6IjI5N2JiNDg2LWJiNzktNDM5OS1iNTAyLWYxODZiZTIxMmFjMiIsImlzX2Fub255bW91cyI6ZmFsc2V9.gC4hM8Syya3d3mcL0_-kAVvb7h385gb-OOH6_nLhgC4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/reports/events/{{event_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"reports",
+								"events",
+								"{{event_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kullanıcı Hakkındaki Raporları Listele",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsImtpZCI6IllkbEc3a3FOMjgzVDNaZ0oiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NmZHV2bHJpemtya3Bpa3NxeXFtLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJiNmFiODZjZC02N2QwLTRkMmUtYjNlZS05YjJmYjQ0M2VkNWUiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzQ1NDAwNTQ5LCJpYXQiOjE3NDUzOTY5NDksImVtYWlsIjoiZ2lyaXdlMTc2MEBmNXVybC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoiZ2lyaXdlMTc2MEBmNXVybC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyc3RfbmFtZSI6IkFscGVyZW4iLCJsYXN0X25hbWUiOiJBY3YiLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6ImI2YWI4NmNkLTY3ZDAtNGQyZS1iM2VlLTliMmZiNDQzZWQ1ZSIsInVzZXJuYW1lIjoiYWxpIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3NDUzOTY5NDl9XSwic2Vzc2lvbl9pZCI6IjI5N2JiNDg2LWJiNzktNDM5OS1iNTAyLWYxODZiZTIxMmFjMiIsImlzX2Fub255bW91cyI6ZmFsc2V9.gC4hM8Syya3d3mcL0_-kAVvb7h385gb-OOH6_nLhgC4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/reports/users/{{reported_user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"reports",
+								"users",
+								"{{reported_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rapor Durumunu Güncelle",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Kendi Raporlarını Listele",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3001",
+			"type": "string"
+		}
+	]
+}

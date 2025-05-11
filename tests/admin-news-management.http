@@ -1,0 +1,67 @@
+### Admin Haber Yönetimi Test İstekleri
+### Bu dosya, REST Client (VSCode eklentisi) ile çalıştırılabilir
+
+@baseUrl = http://localhost:3000/api
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... # Admin JWT token'ını buraya ekleyin
+@sportId = 18f0a9e5-1c2d-4f3e-9... # Test spor ID'si
+
+### 1. Sporları Listele (Haber oluşturma/düzenleme için)
+GET {{baseUrl}}/api/admin/sports
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 2. Haberleri Listele (Admin Paneli)
+GET {{baseUrl}}/api/admin/news?page=1&limit=10
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 3. Haberleri Filtrele (Anahtar kelime ile)
+GET {{baseUrl}}/api/admin/news?keyword=futbol
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 4. Haberleri Filtrele (Spor dalına göre)
+GET {{baseUrl}}/api/admin/news?sportId={{sportId}}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 5. Yeni Haber Oluştur
+POST {{baseUrl}}/api/admin/news
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Milli Takım, Dünya Kupası Elemelerinde İlk Galibiyeti Aldı",
+  "content": "Türkiye Milli Futbol Takımı, 2026 Dünya Kupası Avrupa Elemeleri'nde oynadığı maçta rakibini 3-1 mağlup etti. Milli oyuncular sahada muhteşem bir performans sergiledi.",
+  "source_url": "https://example.com/spor/milli-takim-galibiyeti",
+  "image_url": "https://example.com/images/milli-takim-mac.jpg",
+  "published_date": "2023-05-15T18:30:00.000Z",
+  "sport_id": "{{sportId}}"
+}
+
+### 6. Haber Düzenle
+# {newsId} yerine düzenlenecek haberin ID'sini yazın
+PUT {{baseUrl}}/api/admin/news/{newsId}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Milli Takım, Dünya Kupası Elemelerinde İlk Galibiyeti 3-1'lik Skorla Aldı",
+  "content": "Türkiye Milli Futbol Takımı, 2026 Dünya Kupası Avrupa Elemeleri'nde oynadığı maçta rakibini 3-1 mağlup etti. Milli oyuncular sahada muhteşem bir performans sergiledi. Gollerimizi Hakan Çalhanoğlu, Kerem Aktürkoğlu ve Arda Güler kaydetti.",
+  "image_url": "https://example.com/images/milli-takim-mac-guncellendi.jpg"
+}
+
+### 7. Haber Sil
+# {newsId} yerine silinecek haberin ID'sini yazın
+DELETE {{baseUrl}}/api/admin/news/{newsId}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+### 8. Genel Haber API'si ile Haberleri Görüntüle (Public Erişim)
+GET {{baseUrl}}/api/news?page=1&limit=10
+Content-Type: application/json
+
+### 9. Genel Haber Detayını Görüntüle (Public Erişim)
+# {newsId} yerine görüntülenecek haberin ID'sini yazın
+GET {{baseUrl}}/api/news/{newsId}
+Content-Type: application/json 
